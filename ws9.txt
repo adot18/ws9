@@ -1,0 +1,168 @@
+aong@f6linuxA5:~$ git clone https://github.com/jenbow/ws9.git
+
+aong@f6linuxA5:~$ cd ws9
+
+script
+
+aong@f6linuxA5:~/ws9$ nano randomsample.sh
+
+First arguments
+
+aong@f6linuxA5:~/ws9$ cat randomsample.sh
+#!/usr/bin/env bash
+set -e
+
+# check if arg 1 is an integer
+if [[ "$1" =~ ^[0-9]+$ ]]
+then
+  echo $1
+fi
+exit
+
+
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 5
+5
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 6
+not 5
+aong@f6linuxA5:~/ws9$ bash randomsample.sh
+
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 100
+not 5
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 100
+
+
+Script in-progress
+
+aong@f6linuxA5:~/ws9$ cat randomsample.sh
+#!/usr/bin/env bash
+set -e
+
+# check if arg 1 is an integer
+if [[ "$1" =~ ^[0-9]+$ ]]
+then
+  # check if arg 1 is between 1-99
+  if [[ $1 > 0 && $1 < 100 ]]
+  then
+    # get total number of lines of input file
+    total_lines=$(wc -l $2 | sed 's/^ *//' | cut -f 1 -d " ")
+    echo "percent selected: " ${1}
+    echo "total lines: " ${total_lines}
+    # calculate number of selected lines
+    selected_lines=$(expr $1 \* ${total_lines} / 100)
+    echo "selected line count: " ${selected_lines}
+    exit
+  fi
+fi
+echo "Error: Input must be an integer between 1 and 99, inclusive."
+exit
+
+test
+
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 5 ../a4/REVIEWS
+Error: Input must be an integer between 1 and 99, inclusive.
+
+scrirpt
+
+aong@f6linuxA5:~/ws9$ cat randomsample.sh
+#!/usr/bin/env bash
+set -e
+
+# check if arg 1 is an integer
+if [[ "$1" =~ ^[0-9]+$ ]]
+then
+  # check if arg 1 is between 1-99
+  if [ $1 -gt 0 ] && [ $1 -lt 100 ]
+  then
+    # get total number of lines of input file
+    total_lines=$(wc -l $2 | sed 's/^ *//' | cut -f 1 -d " ")
+    echo "percent selected: " ${1}
+    echo "total lines: " ${total_lines}
+    # calculate number of selected lines
+    selected_lines=$(expr $1 \* ${total_lines} / 100)
+    echo "selected line count: " ${selected_lines}
+    exit
+  fi
+fi
+echo "Error: Input must be an integer between 1 and 99, inclusive."
+exit
+
+test
+
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 5 ../a4/helpful_ids.tmp
+percent selected:  5
+total lines:  100
+selected line count:  5
+
+
+
+aong@f6linuxA5:~/ws9$ cat randomsample.sh
+#!/usr/bin/env bash
+set -e
+
+
+if [[ "$1" =~ ^[0-9]+$ ]]
+then
+
+  if [ $1 -gt 0 ] && [ $1 -lt 100 ]
+  then
+
+    total_lines=$(wc -l $2 | sed 's/^ *//' | cut -f 1 -d " ")
+    echo "percent selected: " ${1}
+    echo "total lines: " ${total_lines}
+    selected_lines=$(expr $1 \* ${total_lines} / 100)
+    printf "selected line count: ${selected_lines} \n\n"
+    shuf -n ${selected_lines} $2
+    exit
+  fi
+fi
+echo "Error: Input must be an integer between 1 and 99, inclusive."
+exit
+
+test
+
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 5 ../a4/helpful_ids.tmp
+percent selected:  5
+total lines:  100
+selected line count: 5
+
+R6JFFQ7QD9S9E
+R2ZL0J5IEOC2RC
+R3C5OUA56KKLZK
+R3RPPCPDM4QLM
+R2HQ3WX26XBRFG
+
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 100 ../a4/helpful_ids.tmp
+
+
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 2 ../a4/helpful_ids.tmp
+percent selected:  2
+total lines:  100
+selected line count: 2
+
+RTLG8BHPCNJY1
+R1OJBOGT5D8Q1D
+
+output
+
+
+aong@f6linuxA5:~/ws9$ head -n 201 ../amazon_reviews_us_Books_v1_02.tsv | tail -n 200 > test_200.tsv
+
+aong@f6linuxA5:~/ws9$ bash randomsample.sh 7 test_200.tsv
+percent selected:  7
+total lines:  200
+selected line count: 14
+
+US	50122160	R3CTHOBUQHSIUV	1931769230	622825265	PC Hardware Tuning & Acceleration	Books	5	3	3	N	N	A reference programmers will turn to again and again	Ictor Rudometov and Evgeny Rudometov's PC HARDWARE TUNING & ACCELERATION (1931769230, $39.95) provides a reference programmers will turn to again and again. The most common computer complaint revolves around systems which do not perform to optimal standards: from processors to memory, video adapters, and other hardware, PC HARDWARE TUNING & ACCELERATION surveys the systems and what might be done to fine-tune their interworkings for best performance levels. Testing results are presented, web sites covering acceleration are provided, and keys to components are included.	2005-10-14
+US	31048862	R2F53LI9KK9MOY	0316769487	862964341	The Catcher in the Rye	Books	4	2	2	N	N	Interesting, fun.	My only complaint is that this book was a bit repetative, and Holden's vocabulary only consists of 4 words: sonuvabitch, goddamn, lousy and phony. It was still quite humorous and the actual story was interesting.<br /><br />It was easy to read and to relate to, so you should pick it up if you're looking for a fun read. Some people complain about the lack of a plot, but to understand this book you need to read deeper into it. It's actually a lot more than some annoying kid's list of complaints about life.<br /><br />The story is about Holden Caulfield's coming of age and realizing that growing up is not a process that can be stopped. He had a lousy childhood, as he puts it, and wants to save other children from going though the things he experienced in his life. He is telling the story from a mental institution, which he was placed in after returning home from the fourth Prep school he had been kicked out of. He flashes back to the events leading up to his arrival at his home and tells the story of those 3 days.	2005-10-14
+US	50122160	R327XTBZOEFFFH	0972485376	804522572	Time to Fly: A Fairy Lane Book	Books	5	3	3	N	N	A superbly, wonderfully illustrated picturebook story	Barbara Lanza has created the elegant, elaborate, enchanted world of Fairy Lane, the home of Petals, a fairy child who has the honor of sprinkling fairy dust on the baby fairies on a particular evening. It's an important responsibility because while baby fairies are born with wings, they cannot fly without the magic fairy dust. Petals (who tends to be a bit messy) is in a bit of a panic -- she can't find the all-important pouch of fairy dust! Young readers will be focused on the pages of this superbly, wonderfully illustrated picturebook story as they follow Petals in her efforts to search all around Fairy Lane for the missing pouch. Time To Fly is an impressive, original, and enthusiastically recommended picturebook addition for family, elementary school, and community library collections -- and leave young readers eagerly looking forward to future adventures of Petals and her friends on Fairy Lane!	2005-10-14
+US	41549714	R2W8C8DO33WTMP	0312853165	929229596	The Demon Princes, Vol. 2: The Face * The Book of Dreams	Books	4	6	7	N	N	Fourth and Fifth Books of the Demon Princes Series	\\"The Face\\", the first book in this volume, is probably the best of the five Demon Princes novels.  The reasons are manifest.  Villainous Lens Larque provides some of the best challenges and intimidation for our hero, Kirth Gersen.  There's the usual helping of exquisite writing and fine descriptions; the menu items during Gersen's restraunt visits are particularly noteworthy.  Most importantly, \\"The Face\\" is the most morally challenging novel in the series.  It presents, to some extent, the best argument for Gersen abandoning his single-minded hunt for revenge in his abortive attempts at romance with two characters.  Lastly, \\"The Face\\" has a killer ending, laugh-out-loud serious if there ever was such a thing. <br /> <br />Another notable element is the planet Dar Sai and its inhabitants, the Darsh.  Dar Sai is odd even by Vance standards.  Giant umbrellas of water protect folks from searing daytime heat, the women grow mustaches, food is prized for its repulsiveness and gender wars are taken to a whole new level.  Vance scores particular points by showing us the spoiled tourists who visit solely to mock the backwards Darsh.  An just dessert is served for them at the end, of course. <br /> <br />The last novel in the series, \\"The Book of Dreams\\", is competent but less biting than \\"The Face\\".  The new villain, Howard Alan Treesong, is less impressively hateable than Lens Larque or Viole Falshune from \\"The Palace of Love\\".  \\"The Book of Dreams\\" contains vignettes set on numerous planets, none of them particuarly brilliant.  The best parts of this novel are the introductory segments to each chapter.  Short paragraphs cover a wide range of ground, from the hilarious philosophical basis of the Institute to the stunning character introductions for Treesong's various Paladins.	2005-10-14
+US	50913245	R1OPUF771LL5O5	067983883X	527133677	Aztec, Inca & Maya (Eyewitness books)	Books	4	27	27	N	N	The artifacts of the great civilizations of Mesoamerica and the Andes	My assumption is that a DK Eyewitness Book entitled \\"Aztec, Inca & Maya\\" would devote sections to each of the three great civilizations that Spanish explorers encountered and eradicated in the 16th century.  The Aztec empire stretched between the Pacific and the Atlantic costs of Mesoamerica, the Maya kingdom was found in the eastern part of Mesoamerica, and the Inca Empire stretched 4,000 miles along the western coast of South America.  But this book considers the people of these regions to be a mosaic of tribes and nations so that most of the chapters are topical, talking about food and drink, religious life, masks, and such in terms of all of the cultures that apply.  There are a few specific chapters devoted to the Incas and their ancestors and Cities of the Andes, but most toss in everything together.<br /><br />I have to admit, I do not find this approach to work anymore than one about Mediterranean cultures that lumps Spain, Italy and Greece together with the likes of Portugal, Sicily, and Crete thrown in for good measure.  In this volume the Olmecs, Teotihuacans, and Toltecs are thrown in for good measure, but not so that you can have anything close to a clear conception of the specific cultures.  There are some topics where it makes sense to talk about multiple cultures, such as the Human sacrifice by the Incas and Aztecs, but that does not apply to all of these topics.  Consequently, I am tempted to get different colored highlighters and color code the three main cultures throughout the book so it is easier to make the connections.<br /><br />As always, the chief attraction of this Eyewitness Book is that it is filled with photographs of artifacts from museums around the world, from the Archaeological Museum in Lima the National Palace in Mexico City to the Biblioteca Nazionale Centrale in Florence and the Rietberg Museum in Zurich (a subtle reminder that a lot of New World treasures made their way to Europe).  Most of us will never get to see a Toltec coyote warrior inlaid with mother-of-pearl, the Gateway of the Sun at Tiahuanaco, or a \\"teponaztli\\" (horizontal drum) in person.  \\"The Los Angeles Times Book Review\\" called one of these volumes \\"Like a mini-museum between the covers of a book,\\" which is so on point that DK always puts that quote on the back.  Almost as important, Elizabeth Bauedano provides detailed captions for the illustrations so that you know what you are looking at and what it means.  Consequently \\"Aztec, Inca & Maya\\" works better as a supplemental source than as an introduction to these fascinating civilizations.nlaid with mother-of-pearl, the Gateway of the Sun at Tiahuanaco, or a \\"teponaztli\\" (horizontal drum) in person.  \\"The Los Angeles Times Book Review\\" called one of these volumes \\"Like a mini-museum between the covers of a book,\\" which is so on point that DK always puts that quote on the back.  Almost as important, Elizabeth Bauedano provides detailed captions for the illustrations so that you know what you are looking at and what it means.  Consequently \\"Aztec, Inca & Maya\\" works better as a supplemental source than as an introduction to these fascinating civilizations.	2005-10-14
+US	51988227	R38RXR8USISV94	0029146739	318460719	The Bell Curve: Intelligence and Class Structure in American Life	Books	4	1150	1228	N	N	More facts and less name-calling, please	Since you're reading this, I assume you're thinking of buying — or at least reading — this book.  That being so, you'll probably want to read other reviews than mine.  This is in principle a good idea; but having just read all of them (147 at the time of writing) I should warn you that you'll need both considerable stamina and a strong stomach: there are indeed thoughtful and informative reviews, but they are islands in a sea of drivel.  By &#34;drivel&#34; I mean the following:<br /><br />1) Reviews consisting entirely (or almost entirely) of expostulation rather than information (&#34;racist garbage&#34;, &#34;most important book of the 20th century&#34;)<br /><br />2) Asserting what the book doesn't deny and denying what it doesn't assert.<br /><br />3) Distortions of the book's content, and other disinformation, for instance:<br /><br />  - &#34;the panel criticized the authors for not explaining what intelligence is&#34; (intelligence is defined on page 4 (!) ).<br /><br />  - &#34;The Bell Curve ignores bad diet&#34; (Nutrition is explicitly dealt with on pp. 391-3).<br /><br />And so on.<br /><br />Many of the critics appear not merely to have misunderstood the book, but not even to have read it; amusingly, this is actually admitted in one review (&#34;Although Head has only browsed through the book, she has seen this kind of pseudo-science before&#34;).  Some appear to be basing their argument upon the Moralistic Fallacy: if different groups had different average IQs for even partially genetic reasons, it would be a Bad Thing, and therefore that cannot possibly be the case.<br /><br />(It also follows, naturally, that there's no need to examine the evidence, because the correct outcome is known in advance; and also that those who think otherwise must be making factual and/or logical errors, either unconsciously or consciously, making them fools in the former case and fascists in the latter.)<br /><br />For myself, I found this a strange book in some ways, but only one other reviewer (Jennifer Kerns, I think the name was) touched on the reason.  And that is that the book falls logically into three parts, which by their very nature are of varying reliability.<br /><br />The first, and by far the largest, covers the available evidence on IQ and heredity.  The second and third parts extrapolate present trends to the future (with unpleasant consequences) and make policy recommendations to deal with these projected consequences.  Thus almost by definition these are on shakier ground.<br /><br />- The first section, which excited by far the most controversy, is (ironically), easily on the firmest ground scientifically — as confirmed (for example) by an American Psychological Association task force explicitly set up to investigate it*; and by a letter to the Wall Street Journal by fifty-two leading psychometricians, a copy of which can be found on the Net (&#34;Mainstream Science on Intelligence&#34;, also reprinted as an appendix in H.J. Eysenck's [[ASIN:156000360X Intelligence: A New Look]]).<br /><br />It seems to me a very able summary: it defines its terms, states its assumptions, produces its evidence and argues the merits of the various theories purporting to explain it.  So there's no need for you to take my word (or anyone's) as to whether the thesis is justified; the evidence and the arguments are both there; if you're capable of rational thought, you should be able to decide for yourself.  And this is what I advise you to do.<br /><br />- The second part envisages the potential stratification of society by intelligence into a hereditary &eacute;lite and underclass.  Here the authors start to part company with some (at least) of the aforementioned psychometricians.  Eysenck, for instance — certainly in the &#34;hereditarian&#34; camp as regards IQ — writes of an earlier article in Atlantic Monthly:<br /><br />&#34;Here Herrnstein is definitely beginning to run off the rails in his predictions (...) he disregards the importance of regression, the genetic factor which causes children of very bright and very dull parents to regress towards the mean of the whole population (...) [R]egression makes it quite impossible that castes should be created which will breed true — that is, where the children will have the same IQ as their parents.  Within a few generations, the differences in IQ between the children of very bright and very dull parents will have been completely wiped out.&#34; ([[ASIN:091273616X The Inequality of Man]], pp.213-219)<br /><br />Richard Lynn, however, disagrees, pointing out that if regression operated in all cases, then dog-breeding, and indeed evolution as a whole, would be impossible.<br /><br />- The third part, the policy recommendations, is well outside my area of competence, so I offer no comment.<br /><br />I should, however, like to make one further comment on other reviews, those containing the recommendation: &#34;People wanting an honest scientific analysis of the claims of racial superiority should read Stephen Jay Gould's [[ASIN:0393314251 The Mismeasure of Man]]&#34;.<br /><br />Gould's writing certainly has many admirable qualities, but honesty and scientific impartiality are not conspicuous among them — for specifics, see (for example)  Chapter 3 of John L. Casti's [[ASIN:0380711656 Paradigms Lost]]. Or see J. Philippe Rushton's review of &#34;Mismeasure&#34;, or Arthur Jensen's review (&#34;The Debunking of Scientific Fossils and Straw Persons&#34;), or John B. Carroll's, all of which you can find on the Web.<br /><br />I've been following the debate over IQ for 40 years, and [[ASIN:0393314251 The Mismeasure of Man]] has more factual errors per page than any book I've ever read.<br /><br />For a critical but still rational review of Herrnstein & Murray, I suggest Thomas Sowell's from American Spectator, which can also be found on the Web (&#34;Ethnicity and IQ&#34;).<br /><br />If you want a balanced account of the IQ field, try [[ASIN:0330263994 Intelligence: The Battle for the Mind]], half of which is written by H.J. Eysenck and half by Leon Kamin, with a final rejoinder from each.  The best summary I'm aware of remains, despite its age, H.J. Eysenck's [[ASIN:0912050160 The IQ Argument]] ([[ASIN:0851170102 Race, Intelligence and Education]] in the U.K.); but good luck getting hold of it!<br /><br />*UPDATE 2007<br /><br />I should have said that although the APA report could not (or at least did not) explicitly rebut any of Herrnstein & Murray's data, or their logic, it refused to endorse their conclusions.<br /><br />I haven't changed the body of the review because that would make nonsense of the discussion in the Comments.<br /><br />For a more detailed factual account of the tactics of Gould et al, I recommend Ullica Segerstråle's [[ASIN:0192862154 Defenders of the Truth]], although I'm not sure I'm convinced by her psychological diagnosis.<br /><br />Probably the best survey of the various issues and viewpoints that I'm aware of is [[ASIN:022403958X The Race Gallery]] by Marek Cohn (1995).he whole population (...) [R]egression makes it quite impossible that castes should be created which will breed true — that is, where the children will have the same IQ as their parents.  Within a few generations, the differences in IQ between the children of very bright and very dull parents will have been completely wiped out.&#34; ([[ASIN:091273616X The Inequality of Man]], pp.213-219)  Richard Lynn, however, disagrees, pointing out that if regression operated in all cases, then dog-breeding, and indeed evolution as a whole, would be impossible.  - The third part, the policy recommendations, is well outside my area of competence, so I offer no comment.  I should, however, like to make one further comment on other reviews, those containing the recommendation: &#34;People wanting an honest scientific analysis of the claims of racial superiority should read Stephen Jay Gould's [[ASIN:0393314251 The Mismeasure of Man]]&#34;.  Gould's writing certainly has many admirable qualities, but honesty and scientific impartiality are not conspicuous among them — for specifics, see (for example)  Chapter 3 of John L. Casti's [[ASIN:0380711656 Paradigms Lost]]. Or see J. Philippe Rushton's review of &#34;Mismeasure&#34;, or Arthur Jensen's review (&#34;The Debunking of Scientific Fossils and Straw Persons&#34;), or John B. Carroll's, all of which you can find on the Web.  I've been following the debate over IQ for 40 years, and [[ASIN:0393314251 The Mismeasure of Man]] has more factual errors per page than any book I've ever read.  For a critical but still rational review of Herrnstein & Murray, I suggest Thomas Sowell's from American Spectator, which can also be found on the Web (&#34;Ethnicity and IQ&#34;).  If you want a balanced account of the IQ field, try [[ASIN:0330263994 Intelligence: The Battle for the Mind]], half of which is written by H.J. Eysenck and half by Leon Kamin, with a final rejoinder from each.  The best summary I'm aware of remains, despite its age, H.J. Eysenck's [[ASIN:0912050160 The IQ Argument]] ([[ASIN:0851170102 Race, Intelligence and Education]] in the U.K.); but good luck getting hold of it!  *UPDATE 2007  I should have said that although the APA report could not (or at least did not) explicitly rebut any of Herrnstein & Murray's data, or their logic, it refused to endorse their conclusions.  I haven't changed the body of the review because that would make nonsense of the discussion in the Comments.  For a more detailed factual account of the tactics of Gould et al, I recommend Ullica Segerstråle's [[ASIN:0192862154 Defenders of the Truth]], although I'm not sure I'm convinced by her psychological diagnosis.  Probably the best survey of the various issues and viewpoints that I'm aware of is [[ASIN:022403958X The Race Gallery]] by Marek Cohn (1995).	2005-10-14
+US	35362907	R1WVY822IX4KBS	0448438313	40678142	Dick and Jane Play School	Books	5	3	3	N	N	Play School Rules	This is an absulutely wonderful Dick and Jane book with beautiful illustrations by <br /> Larry Ruppert. He has iullustrated several of the new Dick and Jane series as well as the Bobbsey Twins series and  continues to capture the  retro style with sweet charm and authenticity. This book is great for young kids who will delight in drawing with chalk on the chalkboard pages. My nieces can't put it down. For those of us babyboomers, it's also a book to enjoy and reminisce about our memories of Dick and Jane	2005-10-14
+US	49967327	RW0FQD4HUYKYT	0596004907	644329548	ActionScript Cookbook	Books	4	1	1	N	N	Great reference book	This book is one of the few Action Script books that specifically covers Flash Communication Server.   Using this book I was able to build a chat server as well as a flash movie that could connect to it and have many clients interact with each other.  <br /> <br />Good Book!	2005-10-14
+US	52038087	R1ZB49MLPJOWW1	0975599518	192748477	Natural Cures "They" Don't Want You to Know about	Books	5	0	0	N	N	A GOOD JUMPSTART TO HEALTHIER LIVING	Having read the book, I passed it on to my wife, and we have made significant changes in lifestyle. I then picked-up a copy for my mom. This book is not the final solution to all your needs, but it definitely will make you consider all the junk we put into our bodies. It inspires one to practice healthier principles to living better everyday. Good advice on organic foods and the over use of medications in this country. It only makes sense to practice preventive measures, than wait for the production line of prescription drugs that surely will follow. What are we so afraid of the public learning from this book? VERY ENLIGHTENING IN MANY WAYS. Read for yourself and decide.	2005-10-14
+US	42010710	R2S9PYNW2RMYYC	B000BL30QO	248254829	Western Civilization CLEP Study Guide	Books	1	2	3	N	N	It stinks...	The outline looked promising, but the actual content leaves a lot to be desired.  It is riddled with typo's, poor grammer, and bad orginization.  Although it does contain some useful facts; many sentenses are nonsensical and some are just flat out wrong.  All in all, IMHO, it's a bad investment at any price.2005-10-14
+US	13114788	R3P9DC4PKI0NRY	0671027344	888030084	The Perks of Being a Wallflower	Books	5	3	5	N	N	Simply Moving	I am 14 years old, and frankly, after reading this book, I started to question the way i live my life. Many people look at this book and see \\"MTV\\" and instantly say it is trash. This is my favorite book. Why? you ask, because it is the one I read last.	2005-10-14
+US	48541186	R1VE0FQQ0QTQJN	0300108834	915891133	A Little History of the World (Little Histories)	Books	5	16	20	N	Y	Simple, entertaining!	Never been much for enjoying history, but the style, brevity, and choice of subject matter come together very nicely in this book.	2005-10-14
+US	24597472	R1VS5NOZYL0PNH	1402545355	405618230	No 1 Ladies Detective Agency	Books	5	1	1	N	N	An excellent read	I really enjoyed the humor and visual scenes about Botswana in this book.	2005-10-14
+US	45449148	R22G14MRW8D4JT	1844494896	10090993	Waiting For Kate Bush	Books	1	30	32	N	N	Truly a waste of your time	If you are truly a fan of Kate Bush and her music, DO NOT buy this book.  Although its title and photos depict Kate, this novel is not about her.  It's plot revolves around the tedious wanderings and musings of a depressed individual with low self esteem and body dimorphism.  As other reviewers have already commented, this is really two books.  The first is the whinings of the painfully depressed narrator, the second, interspersed randomly with the first, is an opinionated biography of Kate.  I suspect that the author is not actually a fan of Kate, and that he only used her name, history, and likeness to capitalize on an established base of fans who are hungry for anything new.  Shame on him.  My only hope is that Kate actually reads this drivel and sues him for associating her with such a piece of trash.  Don't waste your time and money.  If you truly want to know about Kate Bush, buy her albums and check out some of the web sites created by her fans.  John Mendelssohn, if you read this, on behalf of everyone who has purchased and read this book, I demand our time and money back.	2005-10-14
