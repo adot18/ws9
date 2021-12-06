@@ -1,0 +1,33 @@
+ 1034  git clone https://github.com/adot18/ws9.git
+ 1035  cd ws9
+ 1036  nano randomsample.sh
+ 1037  cat randomsample.sh 
+ 1038  bash 5 randomsample.sh 
+ 1039  bash randomsample.sh 5 
+ 1040  nano randomsample.sh
+ 1041  bash randomsample.sh 5 
+ 1045  bash randomsample.sh 100
+ 1046  bash randomsample.sh 10
+ 1047* 
+ 1052  bash randomsample.sh 1 [head -n 100 ../amazon_reviews_us_Books_v1_02.tsv] 
+ 1053  bash randomsample.sh 1 [../amazon_reviews_us_Books_v1_02.tsv | head -n 1] 
+ 1054  cd ..
+ 1055  ls
+ 1056  cd ws9
+ 1057  head -n 201 ../amazon_reviews_us_Books_v1_02.tsv > test_200.tsv
+ 1058  ls
+ 1059  bash randomsample.sh 1 test_200.tsv 
+ 1060  head -n 201 ../amazon_reviews_us_Books_v1_02.tsv | tail -n -1 > test_200.tsv
+ 1061  wc -l test_200.tsv 
+ 1062  head -n 201 ../amazon_reviews_us_Books_v1_02.tsv | tail -n 200 > test_200.tsv
+ 1063  wc -l test_200.tsv 
+ 1064  bash randomsample.sh 7 test_200.tsv 
+ 1065  nano ws9.txt
+ 1066  nano log_complete
+ 1067  nano ws9.txt
+ 1068  cat randomsample.sh 
+ 1069  bash randomsample.sh 5 ../a4/helpful_ids.tmp 
+ 1070* 
+ 1071  bash randomsample.sh 2 ../a4/helpful_ids.tmp 
+ 1072  head -n 201 ../amazon_reviews_us_Books_v1_02.tsv | tail -n 200 > test_200.tsv
+ 1073  bash randomsample.sh 7 test_200.tsv
